@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Company Profile - Volten International</title>
+<link rel="icon" type="image/png" href="asset/logo/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#d8e3ed;--soft:#c7d6e4;--card:#f4f3ef;--ink:#101113;--muted:#5b5c60;--blue:#6e93be;--deep:#3c5f86;--line:#b9c9d8;--gold:#a87922;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--ink);font-family:Inter,sans-serif;line-height:1.6;overflow-x:hidden;}
+  h1,h2,h3,.brand,.nav-links a,.nav-cta{font-family:'Bricolage Grotesque',sans-serif;}
+  a{color:inherit;text-decoration:none;}
+  header{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:20;width:min(94vw,1180px);display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-radius:100px;background:rgba(255,255,255,.78);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.9);box-shadow:0 8px 30px -12px rgba(60,95,134,.2);}
+  .brand img{height:58px;width:auto;display:block;}
+  .nav-links{display:flex;gap:6px;list-style:none;padding:5px;border-radius:100px;}
+  .nav-links a{font-size:13.5px;font-weight:500;color:var(--muted);padding:8px 16px;border-radius:100px;transition:color .2s ease, background .2s ease;}
+  .nav-links a:hover{color:var(--deep);}
+  .dropdown{position:relative;display:inline-block;vertical-align:top;}
+  .dropdown-toggle{font-size:13.5px;font-weight:500;color:var(--muted);border-radius:100px;transition:color .2s ease, background .2s ease;display:inline-flex;align-items:center;gap:4px;cursor:pointer;vertical-align:middle;}
+  .dropdown-toggle:hover{color:var(--deep);}
+  .dropdown-menu{position:absolute;top:calc(100% + 8px);left:0;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:12px;list-style:none;padding:8px 0;min-width:200px;box-shadow:0 8px 24px -12px rgba(60,95,134,.2);opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .2s ease, visibility .2s ease, transform .2s ease;z-index:1000;}
+  .dropdown:hover .dropdown-menu{opacity:1;visibility:visible;transform:translateY(0);}
+  .dropdown-menu li a{display:block;padding:10px 18px;font-size:13.5px;font-weight:500;color:var(--muted);transition:color .2s ease, background .2s ease;white-space:nowrap;}
+  .dropdown-menu li a:hover{color:var(--deep);background:rgba(110,147,190,.12);}
+  .nav-cta{display:inline-flex;align-items:center;gap:7px;background:var(--ink);color:#fff;padding:11px 20px;border-radius:100px;font-size:13.5px;font-weight:600;transition:transform .2s ease, background .2s ease;}
+  .nav-cta:hover{background:var(--deep);transform:translateY(-1px);}
+  .nav-cta svg{width:15px;height:15px;fill:currentColor;}
+  .nav-toggle{display:none;background:none;border:0;font-size:20px;color:var(--ink);cursor:pointer;}
+  section{padding:100px 6vw;}
+  .hero{min-height:82vh;padding-top:190px;display:grid;grid-template-columns:1.05fr .95fr;gap:6vw;align-items:center;background:radial-gradient(circle at 75% 20%,rgba(110,147,190,.4),transparent 30%),linear-gradient(145deg,#d8e3ed,#eef2f1);}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:18px;padding:6px 13px;border-radius:100px;background:rgba(110,147,190,.16);color:var(--deep);font:11px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;}
+  .hero h1{font-size:clamp(42px,6vw,78px);line-height:1.02;max-width:730px;letter-spacing:-.02em;}
+  .hero h1 em{font-style:normal;color:var(--deep);}
+  .hero p{max-width:600px;margin-top:24px;color:var(--muted);font-size:17px;}
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px;}
+  .button{display:inline-flex;align-items:center;justify-content:center;padding:14px 22px;border-radius:100px;font-weight:700;font-size:14px;background:var(--ink);color:#fff;}
+  .button.secondary{background:rgba(255,255,255,.65);color:var(--ink);border:1px solid var(--line);}
+  .hero-media{position:relative;}
+  .hero-media img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:28px;display:block;box-shadow:0 30px 70px -28px rgba(16,17,19,.42);}
+  .hero-label{position:absolute;bottom:18px;left:18px;padding:13px 16px;border-radius:14px;background:rgba(16,17,19,.82);backdrop-filter:blur(12px);color:#fff;font:11px 'JetBrains Mono',monospace;letter-spacing:.08em;}
+  .section-head{max-width:700px;margin-bottom:42px;}
+  .section-head h2{font-size:clamp(30px,4vw,50px);line-height:1.05;}
+  .section-head p{margin-top:14px;color:var(--muted);}
+  .profile-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:stretch;}
+  .founders-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:22px;align-items:stretch;}
+  .founders-image{width:100%;height:100%;min-height:360px;object-fit:cover;object-position:center top;border-radius:18px;display:block;}
+  .founder-copy{display:flex;flex-direction:column;justify-content:center;}
+  .founder-copy h3{font-size:clamp(26px,3vw,38px);line-height:1.1;margin-bottom:16px;}
+  .founder-copy p{font-size:17px;line-height:1.75;color:var(--muted);}
+  .founder-roles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:22px;}
+  .founder-role{padding:14px;border-left:3px solid var(--gold);background:rgba(207,176,83,.12);border-radius:0 10px 10px 0;}
+  .founder-role strong{display:block;font-size:14px;}
+  .founder-role span{display:block;color:var(--muted);font-size:11px;margin-top:3px;}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px;}
+  .panel h3{font-size:24px;margin-bottom:14px;}
+  .panel p{color:var(--muted);margin-bottom:14px;}
+  .dark-panel{background:#111820;color:#fff;border-color:#111820;}
+  .dark-panel p{color:rgba(255,255,255,.72);}
+  .quote{font-size:23px;line-height:1.3;color:#fff!important;}
+  .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px;}
+  .fact{padding:16px;border-left:3px solid var(--blue);background:rgba(255,255,255,.55);border-radius:0 12px 12px 0;}
+  .fact strong{display:block;font:700 27px 'Bricolage Grotesque',sans-serif;}
+  .fact span{font-size:11px;color:var(--muted);line-height:1.35;display:block;margin-top:3px;}
+  .dark-panel .fact{background:rgba(255,255,255,.08);border-left-color:#d7bd6c;}
+  .dark-panel .fact span{color:rgba(255,255,255,.62);}
+  .split{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
+  .list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .list li{padding:12px 14px;background:rgba(255,255,255,.58);border:1px solid var(--line);border-radius:11px;color:var(--muted);}
+  .list li::before{content:'✓';color:var(--blue);font-weight:700;margin-right:9px;}
+  .operation-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+  .country{padding:14px 10px;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:12px;font-weight:600;font-size:13px;}
+  .country span{display:block;font-size:24px;margin-bottom:4px;}
+  .focus{background:var(--soft);}
+  .focus-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .focus-card{padding:24px;border-radius:18px;background:var(--card);border:1px solid var(--line);}
+  .focus-card h3{font-size:22px;margin-bottom:7px;}
+  .focus-card p{color:var(--muted);font-size:14px;}
+  .focus-card .number{font:700 38px 'Bricolage Grotesque',sans-serif;color:var(--deep);}
+  .certs{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
+  .cert{padding:9px 13px;border:1px solid var(--line);border-radius:100px;background:rgba(255,255,255,.64);font:11px 'JetBrains Mono',monospace;color:var(--deep);}
+  footer{padding:30px 6vw;background:var(--ink);color:rgba(255,255,255,.55);display:flex;justify-content:space-between;align-items:center;font-size:13px;}
+  footer img{height:58px;width:auto;}
+  @media(max-width:980px){header{width:92vw;padding:12px 16px}.brand img{height:42px!important;max-width:145px;object-fit:contain}.nav-cta{display:inline-flex;padding:9px 11px;font-size:12px;gap:5px}.nav-links{position:fixed;top:76px;left:4vw;right:4vw;display:flex;flex-direction:column;gap:6px;padding:14px;background:var(--card);border-radius:20px;transform:translateY(-140%);transition:transform .3s ease;box-shadow:0 20px 40px -20px rgba(0,0,0,.2)}.nav-links.open{transform:translateY(0)}.nav-links a{width:100%}.dropdown{width:100%}.dropdown-toggle{width:100%;padding:8px 16px}.dropdown-menu{display:none;position:static;top:auto;left:auto;width:100%;min-width:0;margin:2px 0 0;padding:4px 0 4px 16px;background:rgba(216,227,237,.55);border:0;border-left:2px solid var(--blue);border-radius:0 10px 10px 0;box-shadow:none;transform:none}.dropdown:hover .dropdown-menu,.dropdown:focus-within .dropdown-menu{display:block;transform:none}.dropdown-menu li a{padding:8px 16px;font-size:13px}.nav-toggle{display:block}.hero{grid-template-columns:1fr;padding-top:130px;min-height:auto}.profile-grid,.founders-grid,.split{grid-template-columns:1fr}.operation-grid{grid-template-columns:repeat(3,1fr)}.focus-grid{grid-template-columns:1fr}.facts{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){section{padding:70px 6vw}header{top:8px}.nav-links{top:62px}.nav-cta{width:auto;height:auto;padding:9px 11px;justify-content:center;border-radius:100px;font-size:12px;gap:5px}.nav-cta svg{width:15px;height:15px}.hero h1{font-size:44px}.hero p{font-size:15px}.hero-media img{border-radius:20px}.founders-image{min-height:240px}.founder-copy p{font-size:15px;line-height:1.65}.founder-roles{grid-template-columns:1fr}.operation-grid{grid-template-columns:repeat(2,1fr)}.panel{padding:22px}.facts{gap:8px}.fact{padding:12px}.fact strong{font-size:22px}footer{flex-direction:column;gap:12px;text-align:center}}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="index.html"><img src="asset/logo/logo.png" alt="Volten International"></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#home">Utama</a></li>
+    <li><a href="index.html#about">Halia Hitam</a></li>
+    <li class="dropdown"><div class="dropdown-toggle">Produk <span style="font-size:10px;">▼</span></div><ul class="dropdown-menu"><li><a href="product.html#product">V-Series Produk</a></li><li><a href="product.html#combo">Combo Set</a></li><li><a href="product.html#vinte">Vintē Kecantikan</a></li></ul></li>
+    <li><a href="index.html#testimonials">Kajian &amp; Testimoni</a></li>
+    <li><a href="#profile">Tentang Syarikat</a></li>
+  </ul>
+  <a class="nav-cta" href="https://wa.me/60199587630" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.66 15l-1.1 4 4.1-1.07A10 10 0 1 0 12 2Zm5.8 13.9c-.25.7-1.38 1.3-1.9 1.38-.5.08-1.1.1-1.78-.1-.4-.13-.92-.3-1.6-.6-2.8-1.2-4.65-4-4.8-4.2-.14-.2-1.14-1.52-1.14-2.9s.72-2.05.98-2.33c.25-.28.55-.35.74-.35h.53c.17.01.4-.07.63.48l.87 2.1c.07.15.12.32.02.5-.1.2-.14.32-.28.48l-.4.48c-.14.14-.28.29-.12.56.16.28.7 1.15 1.5 1.87 1.03.92 1.9 1.2 2.18 1.34.28.14.44.12.6-.07.16-.18.67-.78.85-1.04.18-.28.36-.23.62-.14.25.09 1.6.76 1.88.9.28.14.46.21.53.33.07.12.07.68-.17 1.36Z"/></svg> WhatsApp Sekarang</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+</header>
+
+<main>
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Company Profile · Volten International</div>
+      <h1>Membina kehidupan lebih sihat dan <em>berjaya.</em></h1>
+      <p>Volten International menggabungkan wellness, kecantikan dan keusahawanan digital melalui konsep Net-Commerce yang moden, tersusun dan berkembang merentas Asia.</p>
+      <div class="hero-actions"><a class="button" href="#profile">Kenali Volten</a><a class="button secondary" href="product.html#product">Lihat Produk</a></div>
+    </div>
+    <div class="hero-media"><img src="https://www.volten.com.my/wp-content/uploads/2026/05/1-5.png" alt="Company profile Volten International"><div class="hero-label">DITUBUHKAN · 2018</div></div>
+  </section>
+
+  <section id="profile">
+    <div class="section-head"><div class="eyebrow">Mengenai Syarikat</div><h2>Ekosistem wellness untuk dunia yang lebih baik.</h2><p>Volten International diasaskan pada tahun 2018 oleh Datuk Ismail Che Ani, Founder &amp; President, bersama Puan Nor Zahira, Co-Founder &amp; Vice President.</p></div>
+    <div class="profile-grid">
+      <div class="panel dark-panel"><p class="quote">“Membina Gaya Hidup Sihat” melalui kesihatan, kecantikan dan kebebasan kewangan.</p><div class="facts"><div class="fact"><strong>10+</strong><span>Negara operasi</span></div><div class="fact"><strong>3</strong><span>Kilang</span></div><div class="fact"><strong>300K</strong><span>Ejen & pengguna</span></div></div></div>
+      <div class="panel"><h3>Identiti kami</h3><p>Volten membina jenama wellness antarabangsa dengan produk premium, sistem pemasaran digital dan peluang pembangunan usahawan dalam satu ekosistem yang menyeluruh.</p><ul class="list"><li>Produk kesihatan dan kecantikan berkualiti premium</li><li>Sistem Net-Commerce berasaskan teknologi</li><li>Komuniti dan latihan untuk usahawan digital</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="founders-grid">
+      <div class="panel"><img class="founders-image" src="asset/details/founder.jpeg" alt="Datuk Ismail Che Ani dan Puan Nor Zahira, pengasas Volten International"></div>
+      <div class="panel founder-copy">
+        <div class="eyebrow">Kepimpinan Volten</div>
+        <h3>Diterajui dengan visi yang jelas.</h3>
+        <p>Volten International diasaskan oleh <strong>Datuk Ismail Che Ani</strong> selaku Founder &amp; President bersama <strong>Puan Nor Zahira</strong> sebagai Co-Founder &amp; Vice President. Kepimpinan mereka memainkan peranan penting dalam membentuk identiti Volten sebagai syarikat yang menitikberatkan gaya hidup sihat, inovasi produk dan pembangunan komuniti usahawan.</p>
+        <div class="founder-roles"><div class="founder-role"><strong>Datuk Ismail Che Ani</strong><span>Founder &amp; President</span></div><div class="founder-role"><strong>Puan Nor Zahira</strong><span>Co-Founder &amp; Vice President</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="focus">
+    <div class="section-head"><div class="eyebrow">Visi &amp; Misi</div><h2>Kesihatan. Kecantikan. Kewangan.</h2><p>Volten menyatukan tiga elemen utama untuk membantu masyarakat mencapai kehidupan yang lebih sihat dan berjaya.</p></div>
+    <div class="split"><div class="panel"><h3>Visi</h3><p>Menjadi jenama wellness dan Net-Commerce bertaraf antarabangsa yang membantu masyarakat mencapai kehidupan lebih sihat dan berjaya.</p></div><div class="panel"><h3>Misi</h3><ul class="list"><li>Menyediakan produk premium yang berkualiti</li><li>Melahirkan lebih ramai usahawan digital</li><li>Membina sistem pemasaran moden</li><li>Mengembangkan pasaran global</li></ul></div></div>
+  </section>
+
+  <section>
+    <div class="section-head"><div class="eyebrow">Operasi Antarabangsa</div><h2>Jaringan yang merentas sempadan.</h2><p>Volten berkembang di lebih 10 negara dengan rangkaian pejabat, kilang, gudang, kakitangan dan ejen yang kukuh.</p></div>
+    <div class="operation-grid"><div class="country"><span>🇲🇾</span>Malaysia</div><div class="country"><span>🇮🇩</span>Indonesia</div><div class="country"><span>🇹🇭</span>Thailand</div><div class="country"><span>🇻🇳</span>Vietnam</div><div class="country"><span>🇸🇬</span>Singapura</div><div class="country"><span>🇮🇳</span>India</div><div class="country"><span>🇵🇭</span>Filipina</div><div class="country"><span>🇱🇦</span>Laos</div><div class="country"><span>🇰🇭</span>Kemboja</div><div class="country"><span>🇧🇳</span>Brunei</div></div>
+    <div class="facts"><div class="fact"><strong>10</strong><span>Ibu pejabat</span></div><div class="fact"><strong>12</strong><span>Cawangan</span></div><div class="fact"><strong>3</strong><span>Gudang</span></div><div class="fact"><strong>200+</strong><span>Kakitangan</span></div><div class="fact"><strong>300K</strong><span>Ejen & pengguna</span></div></div>
+  </section>
+
+  <section class="focus"><div class="section-head"><div class="eyebrow">Kepakaran Produk</div><h2>Halia hitam sebagai identiti.</h2><p>Kaempferia Parviflora dari Thailand menjadi bahan utama dalam rangkaian wellness Volten, diperkaya dengan bioflavonoid dan methoxyflavone melalui teknologi ekstrak 10:1.</p></div><div class="focus-grid"><div class="focus-card"><div class="number">01</div><h3>VR4 Capsule</h3><p>100% ekstrak Halia Hitam premium dalam kapsul gel berasaskan tumbuhan untuk gaya hidup aktif.</p></div><div class="focus-card"><div class="number">02</div><h3>Wellness</h3><p>Minuman botanikal, kopi, teh, susu kesihatan, minuman tenaga dan nutrisi untuk seisi keluarga.</p></div><div class="focus-card"><div class="number">03</div><h3>Luxury Beauty</h3><p>Produk kecantikan botanikal seperti cleanser, cleansing balm, lipstick, foundation dan compact powder.</p></div></div></section>
+
+  <section><div class="profile-grid"><div class="panel"><div class="eyebrow">Pengiktirafan</div><h3>Jenama yang dipercayai.</h3><p>Pencapaian industri mencerminkan komitmen Volten dalam membina jenama wellness dan Net-Commerce yang kukuh.</p><div class="certs"><span class="cert">E-Branding Award 2021</span><span class="cert">SMEs Best Brands 2021</span><span class="cert">Brand Leadership 2021</span><span class="cert">Keahlian DSAM</span></div></div><div class="panel dark-panel"><div class="eyebrow">Net-Commerce</div><h3>Shop · Share · Earn</h3><p>Model perniagaan yang menggabungkan network marketing, digital marketing dan online shopping untuk peluang yang fleksibel.</p><a class="button secondary" href="https://wa.me/60199587630?text=Saya%20berminat%20untuk%20menjadi%20ejen%20Volten" target="_blank" rel="noopener">Bercakap dengan kami</a></div></div></section>
+</main>
+
+<footer><div class="brand"><img src="asset/logo/logo.png" alt="Volten" style="height:85px;width:auto;"></div><div>© 2026 BroFandiEmpire by <small>m@y</small></div></footer>
+<script>const toggle=document.getElementById('navToggle');const links=document.getElementById('navLinks');toggle.addEventListener('click',()=>links.classList.toggle('open'));links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));</script>
+</body>
+</html>
